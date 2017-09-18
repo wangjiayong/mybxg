@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学IT - 后台管理系统</title>
+    <link rel="stylesheet" href="/public/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/assets/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="/public/assets/nprogress/nprogress.css">
+    <link rel="stylesheet" href="/public/less/index.css">
+</head>
+<body>
+    <!-- 登录 -->
+    <div class="login">
+        <div class="login-wrap">
+            <div class="avatar">
+                <img src="./uploads/monkey.png" class="img-circle" alt="">
+            </div>
+            <form id='loginform' class="col-xs-offset-1 col-xs-10">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    <input name='tc_name' type="text" class="form-control" placeholder="用户名">
+                </div>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <i class="fa fa-key"></i>
+                    </span>
+                    <input name='tc_pass' type="password" class="form-control" placeholder="密码">
+                </div>
+                <button id='loginbtn' type="submit" class="btn btn-lg btn-primary btn-block">登 录</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="/public/assets/jquery/jquery.min.js"></script>
+    <script src="/public/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+      $('#loginbtn').on('click',function(){
+          $.ajax({
+              type:'post',
+              url:'/api/login',//请求自己配置的服务器上的资源
+              data:$('#loginform').serialize(),//表单属性中的name的值是发送给后台使用的,通过表单序列化获取所有要提交的表单name属性
+              dataType:'json',//这里形成跨域但是这里的接口是json接口不是jsonp接口所以不能使用jsonp，只能是配置反向代理用/api代表 http://api.studyit.com而/api就是mybxg.com/api此时域名相同就不会形成跨域了
+              success:function(data){
+                 if (data.code==200){
+                     location.href='/main/index'//这个操作地址栏它会自动在http://mybxg.com后面补全/main/index（为什么写全http://mybxg.com/main/index）
+                 }
+              }
+          })
+          return false;//由于按钮有submit默认提交行为提交以后会刷新页面
+      })
+    </script>
+</body>
+</html>
