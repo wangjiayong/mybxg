@@ -1,4 +1,4 @@
-define(['jquery', 'cookie'], function ($) {//['jquery']引入依赖，依赖jQuery，传入jQuery用$来接收，这里的cookie已经使用了require.js是标准模块,并且被插到了jQuery上所以不用形参来接收了
+define(['jquery','template', 'cookie'], function ($,template) {//['jquery']引入依赖，依赖jQuery，传入jQuery用$来接收，这里的cookie已经使用了require.js是标准模块,并且被插到了jQuery上所以不用形参来接收了
     //NProgress.start();
     //NProgress.done();
 
@@ -25,6 +25,10 @@ define(['jquery', 'cookie'], function ($) {//['jquery']引入依赖，依赖jQue
     }
     var str = $.cookie('loginInfo')
     var obj = str && JSON.parse(str)//判断一下str存不存在，如果不存在来转换就会报错
-    $('.profile .avatar img').attr('src', obj.tc_avatar)
-    $('.profile h4').html(obj.tc_name)
+    //$('.aside .profile .avatar img').attr('src', obj.tc_avatar)
+    //$('.aside .profile h4').html(obj.tc_name)
+    //通过模板代替上面两句，模板直接使用的是数据对象里面的属性（在模板里被直接当作是变量来使用）
+    var tpl='<div class="avatar img-circle"><img src="{{tc_avatar}}"></div><h4>{{tc_name}}</h4>'
+    var html=template.render(tpl,obj)
+    $('.aside .profile').html(html)
 })

@@ -3,6 +3,7 @@ require.config({
     paths:{//给各个文件取别名
         jquery:'jquery/jquery',//后缀名不用写
         cookie:'jquery-cookie/jquery.cookie',//这里配置的别名用在引入依赖的时候和入口文件
+        template:'artTemplate/template-web',
         common:'../js/common',
         login:'../js/login',
     }
