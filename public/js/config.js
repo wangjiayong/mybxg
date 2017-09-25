@@ -5,6 +5,8 @@ require.config({
         cookie:'jquery-cookie/jquery.cookie',//这里配置的别名用在引入依赖的时候和入口文件
         bootstrap:'bootstrap/js/bootstrap.min',
         template:'artTemplate/template-web',
+        datepicker:'bootstrap-datepicker/js/bootstrap-datepicker',
+        language:'bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min',
         util:'../js/util',
         common:'../js/common',
         login:'../js/login',
@@ -14,6 +16,9 @@ require.config({
     shim:{
         bootstrap:{
             deps:['jquery']//由于bootstrap不是标准模块，并且依赖于jquery
+        },
+        language:{
+            deps:['jquery','datepicker']
         }
     }
 })
