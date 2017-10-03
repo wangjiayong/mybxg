@@ -1,4 +1,4 @@
-define(['jquery', 'template', 'util', 'uploadify', 'jcrop','form'], function ($, template, util) {
+define(['jquery', 'template', 'util', 'uploadify', 'jcrop', 'form'], function ($, template, util) {
     //依旧是定位到课程添加
     util.setMenu('/course/add')
     var csid = util.qs('cs_id')//获取跳转过来的页面在地址栏中的id（携带过来的）
@@ -10,6 +10,8 @@ define(['jquery', 'template', 'util', 'uploadify', 'jcrop','form'], function ($,
         success: function (data) {
             var html = template('pictureTpl', data.result)
             $('#pictureInfo').html(html)
+            var img = $('.preview img').eq(0)//获取图片在cropImage方法里使用
+            var nowCrop = null//防止多次点击保存图片
             //图片上传
             $('#myfile').uploadify({
                 width: '80',
@@ -24,6 +26,10 @@ define(['jquery', 'template', 'util', 'uploadify', 'jcrop','form'], function ($,
                 onUploadSuccess: function (a, b, c) {
                     var obj = JSON.parse(b.trim())//把返回的字符串的所有空格去掉再转换成对象
                     $('.preview img').attr('src', obj.result.path)
+                    //图片上传成功之后直接出现选区，并且操作jcropBtn按钮
+                    cropImage()
+                    $('#jcropBtn').text('保存图片').attr('data-flag', true)
+
                 }
 
             })
@@ -35,12 +41,12 @@ define(['jquery', 'template', 'util', 'uploadify', 'jcrop','form'], function ($,
                     //把下面设置好的表单信息提交给后台来进行对图片的裁切
                     //jcrop插件只是负责得到选区的左上角坐标和宽高放入表单里面，裁切是后台来操作
                     $('#cropForm').ajaxSubmit({
-                        type:'post',
-                        url:'/api/course/update/picture',
-                        data:{cs_id:csid},//表单里没有而后台需要这个参数，把本页面的csid传过去
-                        dataType:'json',
-                        success:function(data){
-                            location.href='/course/lesson?cs_id='+data.result.cs_id
+                        type: 'post',
+                        url: '/api/course/update/picture',
+                        data: {cs_id: csid},//表单里没有而后台需要这个参数，把本页面的csid传过去
+                        dataType: 'json',
+                        success: function (data) {
+                            location.href = '/course/lesson?cs_id=' + data.result.cs_id
                         }
                     })
                 } else {
@@ -51,12 +57,13 @@ define(['jquery', 'template', 'util', 'uploadify', 'jcrop','form'], function ($,
                 }
             })
             //封装裁切图片的方法
-            var img = $('.preview img').eq(0)//获取图片
             function cropImage() {
                 img.Jcrop({
                     aspectRatio: 2,//把选区的宽高形成比例关系
                 }, function () {
-                    console.log(this);
+                    //console.log(this);
+                    nowCrop && nowCrop.destroy()//每次进来先清除上一次的裁切实例
+                    nowCrop = this//把当前实例赋值给变量nowCrop
                     //获取当前图片的宽高
                     var width = this.ui.stage.width
                     var height = this.ui.stage.height
