@@ -1,4 +1,4 @@
-define(['jquery','util','form'],function($,util){
+define(['jquery','util','form','state'],function($,util){
     util.setMenu(location.pathname)
     $('#courseBtn').click(function(){
         $('#courseForm').ajaxSubmit({

@@ -1,4 +1,4 @@
-define(['jquery', 'template', 'util', 'datepicker', 'language', 'validate', 'form'], function ($, template, util) {
+define(['jquery', 'template', 'util', 'datepicker', 'language', 'validate', 'form','state'], function ($, template, util) {
     var tcid = util.qs('tc_id')
     if (tcid) {
         //如果点击了编辑才会有tcid编辑讲师

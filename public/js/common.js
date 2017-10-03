@@ -1,6 +1,6 @@
-define(['jquery','template', 'cookie'], function ($,template) {//['jquery']引入依赖，依赖jQuery，传入jQuery用$来接收，这里的cookie已经使用了require.js是标准模块,并且被插到了jQuery上所以不用形参来接收了
-    //NProgress.start();
-    //NProgress.done();
+define(['jquery','template','nprogress' ,'cookie'], function ($,template,NProgress) {//['jquery']引入依赖，依赖jQuery，传入jQuery用$来接收，这里的cookie已经使用了require.js是标准模块,并且被插到了jQuery上所以不用形参来接收了
+    NProgress.start();
+    NProgress.done();
 
 $('.navs ul').prev('a').on('click', function () {
     $(this).next().slideToggle();
