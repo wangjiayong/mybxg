@@ -5,7 +5,7 @@ define(['jquery', 'template', 'util'], function ($, template, util) {
     $.ajax({
         type:'get',
         url:'/api/course/basic',
-        data:{cs_id:csid},
+        data:{cs_id:csid},//传到后台不同的id返回不同的数据
         dataType:'json',
         success:function(data){
             console.log(data);

@@ -8,6 +8,7 @@ define(['jquery','util','form'],function($,util){
             dataType:'json',
             success:function(data){
                 if (data.code==200){
+                    //把你提交的课程信息保存到数据库里面，并且返回对应id（每次新的添加都是在数据库的最后一个id加1返回）
                     location.href='/course/basic?cs_id='+data.result.cs_id
                 }
             }
